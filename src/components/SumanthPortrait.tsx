@@ -11,7 +11,8 @@ export const SumanthPortrait: React.FC<SumanthPortraitProps> = ({
   customImage,
   className = '',
 }) => {
-  const [imgSrc, setImgSrc] = useState(customImage || '/Pp.png');
+  const baseImageUrl = `${import.meta.env.BASE_URL}Pp.png`;
+  const [imgSrc, setImgSrc] = useState(customImage || baseImageUrl);
   const [hasImageLoaded, setHasImageLoaded] = useState(false);
 
   return (
@@ -35,8 +36,8 @@ export const SumanthPortrait: React.FC<SumanthPortraitProps> = ({
           transition={{ duration: 0.6, ease: 'easeOut' }}
           onLoad={() => setHasImageLoaded(true)}
           onError={() => {
-            if (imgSrc !== '/mypng.png') {
-              setImgSrc('/mypng.png');
+            if (imgSrc !== baseImageUrl) {
+              setImgSrc(baseImageUrl);
             }
           }}
           className="w-full h-full object-cover object-center filter contrast-[1.03] brightness-[1.01] transition-transform duration-500 group-hover:scale-105"
