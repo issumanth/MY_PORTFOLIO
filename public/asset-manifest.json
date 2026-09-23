@@ -1,0 +1,7 @@
+{
+  "files": {
+    "main.css": "/src/index.css",
+    "main.js": "/src/main.tsx",
+    "index.html": "/index.html"
+  }
+}

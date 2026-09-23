@@ -1,0 +1,6 @@
+{
+  "name": "Sumanth - Developer Portfolio",
+  "description": "Modern interactive developer portfolio featuring 3D magnetic eye tracking, custom emoji cursor interactions, skill showcases, and featured projects.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

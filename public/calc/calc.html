@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sumanth's Calculator App</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+    body {
+      background: #0f172a;
+      color: #f8fafc;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+    .back-nav {
+      margin-bottom: 1.5rem;
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: #1e293b;
+      color: #38bdf8;
+      border: 1px solid #334155;
+      padding: 0.5rem 1rem;
+      border-radius: 9999px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+    .back-btn:hover {
+      background: #334155;
+      color: #e0f2fe;
+      transform: translateY(-1px);
+    }
+    .calculator-card {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 1.5rem;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6), 0 0 25px rgba(56, 189, 248, 0.15);
+      width: 100%;
+      max-width: 360px;
+      padding: 1.5rem;
+    }
+    .header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    .brand {
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      color: #94a3b8;
+      text-transform: uppercase;
+    }
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 8px #10b981;
+    }
+    .display {
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 1rem;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.25rem;
+      text-align: right;
+      min-height: 90px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      overflow: hidden;
+    }
+    .previous-operand {
+      color: #64748b;
+      font-size: 0.95rem;
+      min-height: 1.25rem;
+      word-break: break-all;
+    }
+    .current-operand {
+      color: #f8fafc;
+      font-size: 2.25rem;
+      font-weight: 600;
+      word-break: break-all;
+      line-height: 1.1;
+    }
+    .keypad {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.75rem;
+    }
+    button.key {
+      background: #334155;
+      color: #f1f5f9;
+      border: none;
+      outline: none;
+      font-size: 1.25rem;
+      font-weight: 500;
+      height: 58px;
+      border-radius: 0.875rem;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      user-select: none;
+    }
+    button.key:hover {
+      background: #475569;
+      transform: translateY(-1px);
+    }
+    button.key:active {
+      transform: scale(0.96);
+    }
+    button.key-op {
+      background: #6366f1;
+      color: #ffffff;
+    }
+    button.key-op:hover {
+      background: #4f46e5;
+    }
+    button.key-action {
+      background: #475569;
+      color: #fca5a5;
+    }
+    button.key-action:hover {
+      background: #64748b;
+    }
+    button.key-equal {
+      background: #06b6d4;
+      color: #0f172a;
+      font-weight: 700;
+      grid-column: span 2;
+    }
+    button.key-equal:hover {
+      background: #22d3ee;
+    }
+  </style>
+</head>
+<body>
+  <div class="back-nav">
+    <a href="/" class="back-btn" id="portfolio-return-btn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="19" y1="12" x2="5" y2="12"></line>
+        <polyline points="12 19 5 12 12 5"></polyline>
+      </svg>
+      Back to Portfolio
+    </a>
+  </div>
+
+  <div class="calculator-card" id="calculator-app">
+    <div class="header-bar">
+      <span class="brand">Sumanth Calc v1.0</span>
+      <div class="status-dot"></div>
+    </div>
+    <div class="display" id="calc-display">
+      <div class="previous-operand" id="previous-operand"></div>
+      <div class="current-operand" id="current-operand">0</div>
+    </div>
+    <div class="keypad">
+      <button class="key key-action" id="btn-clear" onclick="clearCalculator()">AC</button>
+      <button class="key key-action" id="btn-del" onclick="deleteDigit()">DEL</button>
+      <button class="key key-action" id="btn-percent" onclick="applyPercentage()">%</button>
+      <button class="key key-op" id="btn-div" onclick="chooseOperation('/')">&divide;</button>
+
+      <button class="key" id="btn-7" onclick="appendNumber('7')">7</button>
+      <button class="key" id="btn-8" onclick="appendNumber('8')">8</button>
+      <button class="key" id="btn-9" onclick="appendNumber('9')">9</button>
+      <button class="key key-op" id="btn-mul" onclick="chooseOperation('*')">&times;</button>
+
+      <button class="key" id="btn-4" onclick="appendNumber('4')">4</button>
+      <button class="key" id="btn-5" onclick="appendNumber('5')">5</button>
+      <button class="key" id="btn-6" onclick="appendNumber('6')">6</button>
+      <button class="key key-op" id="btn-sub" onclick="chooseOperation('-')">&minus;</button>
+
+      <button class="key" id="btn-1" onclick="appendNumber('1')">1</button>
+      <button class="key" id="btn-2" onclick="appendNumber('2')">2</button>
+      <button class="key" id="btn-3" onclick="appendNumber('3')">3</button>
+      <button class="key key-op" id="btn-add" onclick="chooseOperation('+')">+</button>
+
+      <button class="key" id="btn-0" onclick="appendNumber('0')">0</button>
+      <button class="key" id="btn-dot" onclick="appendNumber('.')">.</button>
+      <button class="key key-equal" id="btn-equal" onclick="compute()">=</button>
+    </div>
+  </div>
+
+  <script>
+    let currentOperand = '0';
+    let previousOperand = '';
+    let operation = undefined;
+
+    const currentDisplay = document.getElementById('current-operand');
+    const previousDisplay = document.getElementById('previous-operand');
+
+    function updateDisplay() {
+      currentDisplay.innerText = currentOperand;
+      if (operation != null) {
+        let opSymbol = operation;
+        if (operation === '*') opSymbol = '×';
+        if (operation === '/') opSymbol = '÷';
+        if (operation === '-') opSymbol = '−';
+        previousDisplay.innerText = `${previousOperand} ${opSymbol}`;
+      } else {
+        previousDisplay.innerText = '';
+      }
+    }
+
+    function clearCalculator() {
+      currentOperand = '0';
+      previousOperand = '';
+      operation = undefined;
+      updateDisplay();
+    }
+
+    function deleteDigit() {
+      if (currentOperand === '0') return;
+      if (currentOperand.length === 1) {
+        currentOperand = '0';
+      } else {
+        currentOperand = currentOperand.slice(0, -1);
+      }
+      updateDisplay();
+    }
+
+    function appendNumber(number) {
+      if (number === '.' && currentOperand.includes('.')) return;
+      if (currentOperand === '0' && number !== '.') {
+        currentOperand = number.toString();
+      } else {
+        currentOperand = currentOperand.toString() + number.toString();
+      }
+      updateDisplay();
+    }
+
+    function chooseOperation(op) {
+      if (currentOperand === '') return;
+      if (previousOperand !== '') {
+        compute();
+      }
+      operation = op;
+      previousOperand = currentOperand;
+      currentOperand = '';
+      updateDisplay();
+    }
+
+    function applyPercentage() {
+      const current = parseFloat(currentOperand);
+      if (isNaN(current)) return;
+      currentOperand = (current / 100).toString();
+      updateDisplay();
+    }
+
+    function compute() {
+      let computation;
+      const prev = parseFloat(previousOperand);
+      const current = parseFloat(currentOperand);
+      if (isNaN(prev) || isNaN(current)) return;
+      switch (operation) {
+        case '+':
+          computation = prev + current;
+          break;
+        case '-':
+          computation = prev - current;
+          break;
+        case '*':
+          computation = prev * current;
+          break;
+        case '/':
+          computation = current === 0 ? 'Error' : prev / current;
+          break;
+        default:
+          return;
+      }
+      currentOperand = computation.toString();
+      operation = undefined;
+      previousOperand = '';
+      updateDisplay();
+    }
+
+    // Keyboard support
+    window.addEventListener('keydown', (e) => {
+      if ((e.key >= '0' && e.key <= '9') || e.key === '.') {
+        appendNumber(e.key);
+      } else if (e.key === '+' || e.key === '-' || e.key === '*' || e.key === '/') {
+        chooseOperation(e.key);
+      } else if (e.key === 'Enter' || e.key === '=') {
+        e.preventDefault();
+        compute();
+      } else if (e.key === 'Backspace') {
+        deleteDigit();
+      } else if (e.key === 'Escape') {
+        clearCalculator();
+      }
+    });
+  </script>
+</body>
+</html>
