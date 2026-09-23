@@ -160,13 +160,13 @@ export const skillsData: SkillItem[] = [
         id: 'BASHA',
         title: '"LOVE STORY OF TWO DIFFERENT LANGUAGES" (Screenplay)',
         description: 'A bilingual feature-length screenplay exploring cross-cultural romance and linguistic identity.',
-        pdfUrl: 'public/basha.pdf', // Uploaded PDF screenplay
+        pdfUrl: `${import.meta.env.BASE_URL}basha.pdf`, // Uploaded PDF screenplay
       },
       {
         id: 'NENU',
         title: '"story of a girl" (Screenplay)',
         description: 'A dramatic feature-length screenplay exploring the family drama.',
-        pdfUrl: 'public/NENU.pdf', // Uploaded PDF screenplayc
+        pdfUrl: `${import.meta.env.BASE_URL}NENU.pdf`, // Uploaded PDF screenplayc
       },
     ],
   },
@@ -246,7 +246,7 @@ export const initialProjects = projectsData;
  * You can easily update the link or download filename anytime!
  */
 export const resumeData: ResumeData = {
-  url: '/resume.pdf',
+  url: `${import.meta.env.BASE_URL}resume.pdf`,
   lastUpdated: 'September 2026',
   summary: 'Multidisciplinary Creative Developer, Film Director & Interactive Storyteller',
   downloadName: 'Sumanth_Creative_Developer_Resume.pdf',
@@ -282,7 +282,7 @@ export const experienceData: ExperienceItem[] = [
         issuer: 'CONQUERORS SOFTWARE TECHNOLOGIES',
         date: '2026',
         credentialId: '-FE-99482',
-        pdfUrl: 'public/conquerors intern cert.pdf',
+        pdfUrl: `${import.meta.env.BASE_URL}conquerors intern cert.pdf`,
         verifyUrl: 'https://coursera.org',
       },
       
